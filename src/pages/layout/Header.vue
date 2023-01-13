@@ -9,7 +9,6 @@
       </transition>
       <div v-if="smAndUp" class="d-flex align-center justify-end" style="flex: 1">
         <account class="no-drag-area" />
-        <window-control v-if="isShowWindowControl" />
       </div>
     </div>
   </v-app-bar>
@@ -24,15 +23,11 @@ import useInForeground from '@/hooks/useInForeground'
 import TopNavbar from '@/pages/layout/TopNavbar.vue'
 import { useAppStore } from '@/store/app'
 import { useSettingStore } from '@/store/setting'
-import is from '@/util/is'
 const router = useRouter()
 const { smAndUp } = useDisplay()
 const { showSearch } = storeToRefs(useAppStore())
 const { rail, navLeft } = storeToRefs(useSettingStore())
 
-const isShowWindowControl = computed(() => {
-  return (is.windows() || is.linux()) && smAndUp.value
-})
 const { isActive: inSearchPage } = useInForeground('search')
 
 const searchInputVisible = computed(() => {

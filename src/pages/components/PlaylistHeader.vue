@@ -13,7 +13,6 @@ import {
   mdiPlayOutline,
   mdiRename,
 } from '@mdi/js'
-import { useIpcRenderer } from '@vueuse/electron'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
 import { useDisplay } from 'vuetify'
@@ -29,7 +28,6 @@ import { useUserStore } from '@/store/user'
 import type { Playlist } from '@/types'
 import { formatDuring, formatNumber } from '@/util/fn'
 import { mdiNetEase } from '@/util/icons'
-import is from '@/util/is'
 import { specialType } from '@/util/metadata'
 const { smAndUp } = useDisplay()
 const { t } = useI18n()
@@ -130,12 +128,7 @@ reset()
 
 function goto() {
   const url = `https://music.163.com/#/playlist?id=${props.playlist.id}`
-  if (is.electron()) {
-    const ipcRenderer = useIpcRenderer()
-    ipcRenderer.invoke('open-url', url)
-  } else {
-    window.open(url, '_blank')
-  }
+  window.open(url, '_blank')
 }
 
 function formatDate(date: number | string, format = 'YYYY-MM-DD') {

@@ -1,5 +1,5 @@
 <template>
-  <v-app class="v-player" :class="{ 'is-desktop': isDesktop }">
+  <v-app class="v-player">
     <AppCC />
     <app-nav v-if="smAndUp && navLeft" class="v-player-nav" />
     <app-header v-if="!inDeepPage" class="v-player-header" />
@@ -19,8 +19,8 @@ import { useDisplay, useTheme } from 'vuetify'
 
 import useInForeground from '@/hooks/useInForeground'
 import { useCurrentTheme } from '@/hooks/useTheme'
+import { useAppStore } from '@/store/app'
 import { useSettingStore } from '@/store/setting'
-import is from '@/util/is'
 
 import AppBottomNav from './layout/BottomNav.vue'
 import AppCC from './layout/CC.vue'
@@ -38,9 +38,6 @@ const { xs, smAndUp } = display
 const theme = useTheme()
 watchEffect(() => {
   theme.global.name.value = themeName.value
-})
-const isDesktop = computed(() => {
-  return is.electron()
 })
 const { isActive: inDeepPage } = useInForeground(['podcast', 'playlist', 'album', 'artist', 'search', 'video', 'daily'])
 </script>
@@ -82,9 +79,6 @@ $transition-time: 350ms;
   transition-property: left, width;
   transition-duration: $transition-time;
   transition-timing-function: $cubic-bezier;
-}
-.is-desktop {
-  user-select: none;
 }
 .v-player {
   border-radius: 28px;

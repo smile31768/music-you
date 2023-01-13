@@ -65,9 +65,6 @@
           {{ modeIcon }}
         </v-icon>
       </v-btn>
-      <!--      <v-btn density="comfortable" icon variant="text" :color="showPipLyric ? 'primary' : ''" @click="togglePipLyric">-->
-      <!--        <v-icon size="x-small">{{ mdiPictureInPictureTopRight }}</v-icon>-->
-      <!--      </v-btn>-->
       <v-btn
         ref="playlistBtn"
         density="comfortable"
@@ -160,6 +157,7 @@ const albumPicUrl = computed(() => sizeOfImage(track.value?.al?.picUrl ?? '', 12
 const showHeartBeat = computed(() => {
   return userStore.logged && !isProgram && !isCurrentFm && track.value && userStore.likes.includes(track.value.id)
 })
+
 async function showPlayingPage() {
   appStore.showLyric = true
 }

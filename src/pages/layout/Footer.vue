@@ -182,18 +182,7 @@ player.pipLyric!.onEnter = function () {
   showPipLyric.value = true
 }
 
-// async function toggleMinimal() {
-//   if (is.electron()) {
-//     const ipcRenderer = useIpcRenderer()
-//     await ipcRenderer.invoke('minimalWindow')
-//   }
-// }
-
 async function showPlayingPage() {
-  // if (is.electron() && settingStore.playingMode === PLAYING_MODE.MD && !settingStore.visualization) {
-  //   const ipcRenderer = useIpcRenderer()
-  //   await ipcRenderer.invoke('adjustWidth')
-  // }
   appStore.showLyric = true
 }
 

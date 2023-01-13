@@ -3,29 +3,29 @@ import type { App } from 'vue'
 import type { RouteLocation, RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
-import Album from '@/pages/Album.vue'
-import Artist from '@/pages/Artist.vue'
-import Daily from '@/pages/Daily.vue'
-import Discover from '@/pages/discover/Discover.vue'
-import FourOhFour from '@/pages/errors/FourOhFour.vue'
-import Explore from '@/pages/explore/Explore.vue'
-import Leaderboard from '@/pages/explore/Leaderboard.vue'
-import Home from '@/pages/Home.vue'
-import Library from '@/pages/Library.vue'
-import List from '@/pages/List.vue'
-import MoodsGenresDetail from '@/pages/moods-genres/detail.vue'
-import MoodsGenres from '@/pages/moods-genres/MoodsGenres.vue'
-import MV from '@/pages/MV.vue'
-import NewAlbum from '@/pages/new-releases/albums.vue'
-import NewVideo from '@/pages/new-releases/videos.vue'
-import Playground from '@/pages/Playground.vue'
-import PodcastCenter from '@/pages/podcast/center.vue'
-import PodcastGenreDetail from '@/pages/podcast/genres/detail.vue'
-import Podcast from '@/pages/podcast/podcast.vue'
-import Queue from '@/pages/Queue.vue'
-import Recent from '@/pages/Recent.vue'
-import Search from '@/pages/search/index.vue'
-import Setting from '@/pages/setting/Setting.vue'
+const Album = () => import('@/pages/Album.vue')
+const Artist = () => import('@/pages/Artist.vue')
+const Daily = () => import('@/pages/Daily.vue')
+const Discover = () => import('@/pages/discover/Discover.vue')
+const FourOhFour = () => import('@/pages/errors/FourOhFour.vue')
+const Explore = () => import('@/pages/explore/Explore.vue')
+const Leaderboard = () => import('@/pages/explore/Leaderboard.vue')
+const Home = () => import('@/pages/Home.vue')
+const Library = () => import('@/pages/Library.vue')
+const List = () => import('@/pages/List.vue')
+const MoodsGenresDetail = () => import('@/pages/moods-genres/detail.vue')
+const MoodsGenres = () => import('@/pages/moods-genres/MoodsGenres.vue')
+const MV = () => import('@/pages/MV.vue')
+const NewAlbum = () => import('@/pages/new-releases/albums.vue')
+const NewVideo = () => import('@/pages/new-releases/videos.vue')
+const Playground = () => import('@/pages/Playground.vue')
+const  PodcastCenter = () => import('@/pages/podcast/center.vue')
+const  PodcastGenreDetail = () => import('@/pages/podcast/genres/detail.vue')
+const  Podcast = () => import('@/pages/podcast/podcast.vue')
+const Queue = () => import('@/pages/Queue.vue')
+const Recent  = () => import('@/pages/Recent.vue')
+const Search = () => import('@/pages/search/index.vue')
+const Setting = () => import('@/pages/setting/Setting.vue')
 
 const musicRoutes: RouteRecordRaw[] = [
   {

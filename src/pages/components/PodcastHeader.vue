@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 // coding here
 import { mdiArrowRight, mdiClose, mdiPlayOutline, mdiPodcast, mdiStar, mdiStarOutline } from '@mdi/js'
-import { useIpcRenderer } from '@vueuse/electron'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
 import { useDisplay } from 'vuetify'
@@ -15,7 +14,6 @@ import { useUserStore } from '@/store/user'
 import type { Podcast } from '@/types'
 import { formatNumber } from '@/util/fn'
 import { mdiNetEase } from '@/util/icons'
-import is from '@/util/is'
 const { smAndUp } = useDisplay()
 const { t } = useI18n()
 const toast = useToast()
@@ -58,12 +56,7 @@ async function subscribe() {
 
 function goto() {
   const url = `https://music.163.com/#/djradio?id=${props.podcast.id}`
-  if (is.electron()) {
-    const ipcRenderer = useIpcRenderer()
-    ipcRenderer.invoke('open-url', url)
-  } else {
-    window.open(url, '_blank')
-  }
+  window.open(url, '_blank')
 }
 
 function formatDate(date: number | string, format = 'YYYY-MM-DD') {

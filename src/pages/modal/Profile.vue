@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { mdiAccountEdit, mdiClose, mdiCog, mdiFaceManProfile, mdiGithub, mdiLogout } from '@mdi/js'
-import { useIpcRenderer } from '@vueuse/electron'
 import dayjs from 'dayjs'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
@@ -10,7 +9,6 @@ import { useRouter } from 'vue-router'
 import placeholderUrl from '@/assets/placeholder.png'
 import { useUserStore } from '@/store/user'
 import type { Account } from '@/types'
-import is from '@/util/is'
 const { t } = useI18n()
 const userStore = useUserStore()
 const router = useRouter()
@@ -39,12 +37,7 @@ const isVip = computed(() => {
   return account.value?.profile.vipType === 11
 })
 const goto = (url: string) => {
-  if (is.electron()) {
-    const ipcRenderer = useIpcRenderer()
-    ipcRenderer.invoke('open-url', url)
-  } else {
-    window.open(url, '_blank')
-  }
+  window.open(url, '_blank')
 }
 
 function dispatch(type: string) {

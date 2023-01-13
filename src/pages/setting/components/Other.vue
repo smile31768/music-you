@@ -59,15 +59,6 @@
       </template>
     </v-list-item>
   </div>
-  <div v-if="is.linux() && is.macOS()">
-    <app-title path="common.exitmode" />
-    <v-list-item class="pa-0">
-      <v-list-item-title class="text-caption"> {{ t('main.setting.exit') }} </v-list-item-title>
-      <template #append>
-        <AppSelect v-model="exitMode" :items="exitModeOptions" />
-      </template>
-    </v-list-item>
-  </div>
   <div>
     <app-title path="message.reset_app" />
     <v-list-item class="pa-0">
@@ -111,7 +102,6 @@ import useMediaDevices from '@/hooks/useMediaDevices'
 import { usePlayer } from '@/player/player'
 import { ExitMode, QUALITY_LEVEL, useSettingStore } from '@/store/setting'
 import { PLAYING_MODE } from '@/util/enum'
-import is from '@/util/is'
 const settingStore = useSettingStore()
 const {
   locale: lang,

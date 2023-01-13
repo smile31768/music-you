@@ -50,7 +50,6 @@ import { useAppStore } from '@/store/app'
 import { usePlayerStore } from '@/store/player'
 import { useSettingStore } from '@/store/setting'
 import { formatDuring } from '@/util/fn'
-import is from '@/util/is'
 
 export default defineComponent({
   components: { DynamicBackgroundIos },
@@ -68,10 +67,6 @@ export default defineComponent({
       return track.value?.al?.picUrl
     })
     async function close() {
-      // if (is.electron()) {
-      //   const ipcRenderer = useIpcRenderer()
-      //   await ipcRenderer.invoke('restoreSize')
-      // }
       appStore.showLyric = false
     }
     // watchEffect(() => {

@@ -22,7 +22,6 @@ import { GridType, useResponsiveGrid } from '@/hooks/useResponsiveGrid'
 import type { shortcutType } from '@/store/homeConfig'
 import { SHORTCUTS, useHomeConfigStore } from '@/store/homeConfig'
 import { useUserStore } from '@/store/user'
-// import is from '@/util/is'
 import { specialType } from '@/util/metadata'
 
 import Shortcut from './Shortcut.vue'

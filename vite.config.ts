@@ -5,8 +5,6 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig, loadEnv } from 'vite'
-import electron from 'vite-plugin-electron'
-import renderer from 'vite-plugin-electron-renderer'
 import { VitePWA } from 'vite-plugin-pwa'
 import vuetify from 'vite-plugin-vuetify'
 
@@ -20,11 +18,10 @@ const __APP_INFO__ = {
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
-  const env = loadEnv(mode, path.resolve(__dirname, './'))
+  // const env = loadEnv(mode, path.resolve(__dirname, './'))
 
   const isDevelopment = command === 'serve'
-  const isProduction = command === 'build'
-  const isElectron = mode === 'electron'
+
   const plugins: any = [
     vue({
       reactivityTransform: true,
@@ -45,53 +42,7 @@ export default defineConfig(({ command, mode }) => {
       dts: './src/components.d.ts',
     }),
   ]
-  if (isElectron) {
-    plugins.push(
-      electron([
-        {
-          entry: 'electron/main/index.ts',
-          onstart(options) {
-            if (process.env.VSCODE_DEBUG) {
-              console.log(/* For `.vscode/.debug.script.mjs` */ '[startup] Electron App')
-            } else {
-              options.startup()
-            }
-          },
-          vite: {
-            build: {
-              sourcemap: isDevelopment,
-              minify: isProduction,
-              outDir: 'dist-electron/main',
-              rollupOptions: {
-                external: Object.keys(dependencies ?? {}),
-              },
-            },
-          },
-        },
-        {
-          entry: 'electron/preload/index.ts',
-          onstart(options) {
-            // Notify the Renderer-Process to reload the page when the Preload-Scripts build is complete,
-            // instead of restarting the entire Electron App.
-            options.reload()
-          },
-          vite: {
-            build: {
-              sourcemap: isDevelopment,
-              minify: isProduction,
-              outDir: 'dist-electron/preload',
-              rollupOptions: {
-                external: Object.keys(dependencies ?? {}),
-              },
-            },
-          },
-        },
-      ]),
-      renderer({
-        nodeIntegration: true,
-      })
-    )
-  } else if (isProduction) {
+  {
     plugins.push(
       VitePWA({
         includeAssets: ['favicon.ico'],
@@ -130,11 +81,6 @@ export default defineConfig(({ command, mode }) => {
     build: {
       emptyOutDir: true,
       sourcemap: isDevelopment,
-      // rollupOptions: {
-      //   output: {
-      //     format: buildElectron ? 'cjs' : 'es',
-      //   },
-      // },
     },
     resolve: {
       alias: {
@@ -145,11 +91,11 @@ export default defineConfig(({ command, mode }) => {
       __APP_INFO__: JSON.stringify(__APP_INFO__),
     },
     server: {
-      host: env.VITE_DEV_SERVER_HOST,
-      port: +env.VITE_DEV_SERVER_PORT,
+      // host: env.VITE_DEV_SERVER_HOST,
+      port: 5173,
       proxy: {
         '/api': {
-          target: `http://${env.VITE_API_SERVER_HOST}:${env.VITE_API_SERVER_PORT}`,
+          target: `http://localhost:12139`,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
         },
