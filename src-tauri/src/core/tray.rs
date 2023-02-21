@@ -57,7 +57,7 @@ impl Tray {
     pub fn on_system_tray_event(app_handle: &AppHandle, event: SystemTrayEvent) {
         match event {
             SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
-                "open_window" => resolve::create_window(app_handle),
+                // "open_window" => resolve::create_window(app_handle),
                 "toggle_play" => handle::Handle::tray_control("toggle_play".into()),
                 "prev_track" => handle::Handle::tray_control("prev_track".into()),
                 "next_track" => handle::Handle::tray_control("next_track".into()),
@@ -75,7 +75,7 @@ impl Tray {
             },
             #[cfg(target_os = "windows")]
             SystemTrayEvent::LeftClick { .. } => {
-                resolve::create_window(app_handle);
+                // resolve::create_window(app_handle);
             }
             _ => {}
         }

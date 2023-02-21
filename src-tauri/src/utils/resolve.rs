@@ -1,11 +1,11 @@
-use tauri::{App, AppHandle, Manager, api::process::{Command}, Wry};
+use tauri::{App, AppHandle, Manager, api::process::{Command}, Wry, WindowUrl};
 
 #[cfg(target_os = "macos")]
 use tauri_utils::TitleBarStyle;
 
 use crate::{core::*};
 
-pub fn resolve_setup(app: &mut App<Wry>) {
+pub fn resolve_setup(app: &mut App<Wry>, window_url: WindowUrl) {
     // #[cfg(target_os = "macos")]
     // app.set_activation_policy(tauri::ActivationPolicy::Accessory);
 
@@ -19,11 +19,11 @@ pub fn resolve_setup(app: &mut App<Wry>) {
             .expect("Failed to spawn packaged node");
     });
     tray::Tray::update_systray(&app.app_handle()).expect("TODO: panic message");
-    create_window(&app.app_handle())
+    create_window(&app.app_handle(), window_url)
 }
 
 /// create main window
-pub fn create_window(app_handle: &AppHandle) {
+pub fn create_window(app_handle: &AppHandle, window_url: WindowUrl) {
     if let Some(window) = app_handle.get_window("main") {
         let _ = window.unminimize();
         let _ = window.show();
@@ -31,10 +31,11 @@ pub fn create_window(app_handle: &AppHandle) {
         return;
     }
 
+
     let builder = tauri::window::WindowBuilder::new(
         app_handle,
         "main".to_string(),
-        tauri::WindowUrl::App("index.html".into()),
+        window_url,
     )
         .resizable(true)
         .title("Music You Tauri")
