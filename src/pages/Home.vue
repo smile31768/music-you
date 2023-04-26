@@ -1,5 +1,11 @@
 <template>
-  <v-app class="v-player">
+  <v-app
+    class="v-player"
+    :style="{
+      borderRadius: isPwa ? 'initial' : '28px',
+      border: isPwa ? 'none' : '8px solid rgba(var(--v-theme-primary), 0.2)',
+    }"
+  >
     <AppCC />
     <app-nav v-if="smAndUp && navLeft" class="v-player-nav" />
     <app-header v-if="!inDeepPage" class="v-player-header" />
@@ -40,6 +46,7 @@ watchEffect(() => {
   theme.global.name.value = themeName.value
 })
 const { isActive: inDeepPage } = useInForeground(['podcast', 'playlist', 'album', 'artist', 'search', 'video', 'daily'])
+const isPwa = useMediaQuery('(display-mode: standalone)')
 </script>
 <style lang="scss">
 $cubic-bezier: cubic-bezier(0.55, -0.01, 0, 1.03);
