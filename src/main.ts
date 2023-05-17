@@ -9,11 +9,13 @@ import { createApp } from 'vue'
 // @ts-ignore
 import VueVirtualScroller from 'vue-virtual-scroller'
 
+
 import App from './App.vue'
 // directives
 import { useDirectives } from './directives'
 // plugins
 import { useContextMenu } from './plugins/contextmenu'
+import { useSnackbar } from '@/plugins/snackbar'
 import { useDayjs } from './plugins/dayjs'
 import { useI18n } from './plugins/i18n'
 import { usePinia } from './plugins/pinia'
@@ -36,4 +38,5 @@ useToast(app)
 useDirectives(app)
 useDayjs(app)
 useContextMenu(app)
+useSnackbar(app)
 app.mount('#app')

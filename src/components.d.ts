@@ -56,6 +56,7 @@ declare module '@vue/runtime-core' {
     SearchInput: typeof import('./components/toggle/SearchInput.vue')['default']
     SearchToggle: typeof import('./components/toggle/SearchToggle.vue')['default']
     Select: typeof import('./components/menu/Select.vue')['default']
+    Snackbar: typeof import('./components/snackbar/snackbar.vue')['default']
     SwitchCard: typeof import('./components/SwitchCard.vue')['default']
     Tag: typeof import('./components/Tag.vue')['default']
     ThemeToggle: typeof import('./components/toggle/ThemeToggle.vue')['default']
