@@ -36,9 +36,10 @@
       <v-row dense>
         <v-col class="d-flex">
           <switch-card
-            v-model="miniplayer"
+            v-model="miniPlayer"
+            rounded="lg"
             title="隐藏底部播放"
-            :subtitle="t('common.hide', miniplayer ? 1 : 2)"
+            :subtitle="t('common.hide', miniPlayer ? 1 : 2)"
             :icon="mdiDockBottom"
           />
         </v-col>
@@ -58,7 +59,7 @@
       <!--      </v-row>-->
       <!--      <MediaCard class="mt-4" />-->
       <!--      <PlayingList class="mt-4" />-->
-      <media-card v-if="miniplayer" class="mt-4" />
+      <media-card v-if="miniPlayer" class="mt-4" />
     </div>
   </v-navigation-drawer>
 </template>
@@ -80,14 +81,12 @@ import { useTheme } from 'vuetify'
 import { useAppStore } from '@/store/app'
 import { APPEARANCE, useSettingStore } from '@/store/setting'
 
-import PlayingList from '../components/PlayingList.vue'
-
 const { t } = useI18n()
 const app = useAppStore()
 const setting = useSettingStore()
 const theme = useTheme()
 const router = useRouter()
-const { miniplayer, navLeft } = storeToRefs(setting)
+const { miniPlayer, navLeft } = storeToRefs(setting)
 const darkMode = computed<boolean>({
   get() {
     return theme.current.value.dark

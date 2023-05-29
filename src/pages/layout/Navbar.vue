@@ -27,7 +27,7 @@
         </v-list-item>
       </v-list>
       <transition name="slide-fade-y">
-        <mini-player-bar v-if="miniplayer && !rail" class="mt-auto" />
+        <mini-player-bar v-if="miniPlayer && !rail" class="mt-auto" />
       </transition>
       <transition name="slide-fade-y">
         <div v-if="rail" class="mb-2 gap-2 px-2 d-flex justify-center flex-column align-center">
@@ -49,8 +49,9 @@ import { useSettingStore } from '@/store/setting'
 import { useUserStore } from '@/store/user'
 import type { Account } from '@/types'
 
-import MiniPlayerBar from './MiniPlayerbar.vue'
-const { rail, miniplayer } = storeToRefs(useSettingStore())
+import MiniPlayerBar from './MiniPlayerBar.vue'
+
+const { rail, miniPlayer } = storeToRefs(useSettingStore())
 const { logged, account } = storeToRefs(useUserStore())
 
 const profile = computed((): Account['profile'] | undefined => {
@@ -95,6 +96,6 @@ const nav = computed(() => {
   return list
 })
 const navStyle = computed(() => {
-  return miniplayer.value ? { borderRight: '1px solid rgba(var(--v-border-color), var(--v-border-opacity))' } : {}
+  return miniPlayer.value ? { borderRight: '1px solid rgba(var(--v-border-color), var(--v-border-opacity))' } : {}
 })
 </script>
