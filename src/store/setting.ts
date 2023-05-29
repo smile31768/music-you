@@ -21,6 +21,10 @@ export enum ExitMode {
   exit,
   prompt,
 }
+export enum NavPosition {
+  left,
+  top,
+}
 export enum WallpaperColor {
   RedSandDunes = 'RedSandDunes',
   GreenRockyMountains = 'GreenRockyMountains',
@@ -47,7 +51,8 @@ export interface SettingState {
   exitMode: ExitMode
   comment: boolean
   lyricTrans: boolean
-  navLeft: boolean
+  navLeft: boolean // deprecated
+  navPosition: NavPosition
 }
 export const useSettingStore = defineStore('setting', {
   state: () => {
@@ -72,6 +77,7 @@ export const useSettingStore = defineStore('setting', {
         comment: false,
         lyricTrans: true,
         navLeft: false,
+        navPosition: NavPosition.left,
       },
       { mergeDefaults: true }
     )

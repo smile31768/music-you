@@ -1,11 +1,11 @@
 <template>
   <v-app-bar class="app_header drag-area" flat>
-    <div class="d-flex flex-grow-1 mr-2 ml-2 align-center" :class="{ 'ml-1': navLeft }">
+    <div class="d-flex flex-grow-1 mr-2 ml-2 align-center">
       <div class="logo" style="flex: 1">
         <aggregate-extend-btn variant="default" />
       </div>
       <transition name="slide-fade-y">
-        <top-navbar v-if="!navLeft" />
+        <top-navbar />
       </transition>
       <div v-if="smAndUp" class="d-flex align-center justify-end" style="flex: 1">
         <account class="no-drag-area" />
@@ -26,7 +26,6 @@ import { useSettingStore } from '@/store/setting'
 const router = useRouter()
 const { smAndUp } = useDisplay()
 const { showSearch } = storeToRefs(useAppStore())
-const { rail, navLeft } = storeToRefs(useSettingStore())
 
 const { isActive: inSearchPage } = useInForeground('search')
 

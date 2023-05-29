@@ -7,8 +7,8 @@
     }"
   >
     <AppCC />
-    <app-nav v-if="smAndUp && navLeft" class="v-player-nav" />
-    <app-header v-if="!inDeepPage && !navLeft" class="v-player-header" />
+    <app-nav v-if="smAndUp && navPosition === NavPosition.left" class="v-player-nav" />
+    <app-header v-if="!inDeepPage && navPosition === NavPosition.top" class="v-player-header" />
 
     <app-content id="v-player-content" class="v-player-content" />
     <app-playbar v-if="smAndUp && !miniPlayer" />
@@ -25,8 +25,7 @@ import { useDisplay, useTheme } from 'vuetify'
 
 import useInForeground from '@/hooks/useInForeground'
 import { useCurrentTheme } from '@/hooks/useTheme'
-import { useAppStore } from '@/store/app'
-import { useSettingStore } from '@/store/setting'
+import { NavPosition, useSettingStore } from '@/store/setting'
 
 import AppBottomNav from './layout/BottomNav.vue'
 import AppCC from './layout/CC.vue'
@@ -38,7 +37,7 @@ import AppContent from './layout/View.vue'
 import AppLogin from './modal/Login.vue'
 import AppPlayingPage from './mode/index.vue'
 const { themeName } = useCurrentTheme()
-const { miniPlayer, navLeft } = storeToRefs(useSettingStore())
+const { miniPlayer, navPosition } = storeToRefs(useSettingStore())
 const display = useDisplay()
 const { xs, smAndUp } = display
 const theme = useTheme()
