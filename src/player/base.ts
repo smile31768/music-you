@@ -70,7 +70,6 @@ export class Player {
   pipLyric: null | PipLyric
   html5: boolean
   taskbarProgress?: boolean
-  ipcRenderer?: any
   constructor() {
     this.store = usePlayerStore()
     this.settingStore = useSettingStore() as Store<'setting', SettingState>
