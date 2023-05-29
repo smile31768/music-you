@@ -28,6 +28,7 @@
       </transition>
       <transition name="slide-fade-y">
         <div v-if="rail" class="mb-2 gap-2 px-2 d-flex justify-center flex-column align-center">
+          <app-account variant="tonal" class="no-drag-area" />
           <theme-toggle />
         </div>
       </transition>
@@ -36,10 +37,10 @@
 </template>
 
 <script setup lang="ts">
-import { mdiAlbum, mdiCompass, mdiFaceManProfile } from '@mdi/js'
+import { mdiAlbum, mdiCompass, mdiFaceManProfile, mdiMagnify, mdiPodcast } from '@mdi/js'
 import { storeToRefs } from 'pinia'
 
-import { useAppStore } from '@/store/app'
+import AppAccount from '@/components/button/Account.vue'
 import { useSettingStore } from '@/store/setting'
 import { useUserStore } from '@/store/user'
 import type { Account } from '@/types'
@@ -54,12 +55,12 @@ const profile = computed((): Account['profile'] | undefined => {
 
 const nav = computed(() => {
   const list = [
-    // {
-    //   icon: mdiMagnify,
-    //   val: 'search',
-    //   title: 'main.nav.search',
-    //   to: '/search',
-    // },
+    {
+      icon: mdiMagnify,
+      val: 'search',
+      title: 'main.nav.search',
+      to: '/search',
+    },
     {
       icon: mdiAlbum,
       val: 'discover',
@@ -71,6 +72,12 @@ const nav = computed(() => {
       val: 'explore',
       title: 'main.nav.explore',
       to: '/explore',
+    },
+    {
+      icon: mdiPodcast,
+      val: 'explore',
+      title: 'main.nav.podcast',
+      to: '/podcast-center',
     },
   ]
   if (logged.value) {
