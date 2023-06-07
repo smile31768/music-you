@@ -1,18 +1,18 @@
 <template>
   <v-card class="text-onSurfaceVariant" :theme="currentTheme">
     <v-layout>
-      <v-main class="frame">
+      <v-main class="frame" @contextmenu="handleContextMenu">
         <v-img
           class="background"
           cover
-          :src="useTrackCover ? coverUrl : currentWallpaper['path']"
+          :src="useTrackCover ? coverUrl : currentWallpaper?.['path']"
           :class="{
             loaded: !loading,
             loading: loading,
           }"
           :style="backgroundFilter"
-          @load="onLoad as string"
-          @error="onError as string"
+          @load="onLoad"
+          @error="onError"
         >
         </v-img>
         <div class="frame-header pt-2 px-2 justify-end drag-area">
@@ -39,8 +39,8 @@
               :aspect-ratio="1"
             />
             <div class="d-flex flex-column text-h5 text-xl-h4 justify-space-evenly">
-              <template v-if="track['al']">
-                <span>{{ track['al']?.['name'] }} - {{ track['ar']?.[0]?.['name'] }}</span>
+              <template v-if="track?.['al']">
+                <span><album-link :album="track['al']" /> - <artists-link :artists="track['ar']" /></span>
               </template>
 
               <span class="text-h4 text-xl-h3 font-weight-regular"
@@ -55,11 +55,11 @@
             <div class="d-flex flex-grow-1 px-4 font-weight-medium">
               <span class="d-flex justify-center" style="width: 65px">{{ formatDuring(currentTime * 1000) }}</span>
               <TrackSlider class="track-slider mx-2" tooltip />
-              <span class="d-flex justify-center" style="width: 65px">{{ formatDuring(track['dt']) }}</span>
+              <span class="d-flex justify-center" style="width: 65px">{{ formatDuring(track?.['dt']) }}</span>
             </div>
 
             <div class="d-flex align-center">
-              <template v-if="!isProgram">
+              <template v-if="!isProgram && track?.id">
                 <like-toggle :id="track['id']" />
                 <music-comment-toggle :id="track['id']" />
               </template>
@@ -92,12 +92,15 @@
 <script lang="ts" setup>
 import { mdiChevronLeft, mdiChevronRight, mdiClose, mdiDotsVertical, mdiImageMultipleOutline } from '@mdi/js'
 import { storeToRefs } from 'pinia'
+import { useContextMenu } from 'vuetify-ctx-menu/lib/main'
 
+import { getSongDownloadUrl } from '@/api/song'
 import placeholderUrl from '@/assets/placeholder.png'
+import useDownload from '@/hooks/useDownload'
 import usePlayerControl from '@/hooks/usePlayerControl'
+import { useTrackOperation } from '@/hooks/useTrackOperation'
 import WallHaven from '@/pages/modal/Wallhaven.vue'
 import ScrollLyric from '@/pages/mode/components/ScrollLyric.vue'
-import { usePlayer } from '@/player/player'
 import { useAppStore } from '@/store/app'
 import { usePlayerStore } from '@/store/player'
 import { useSettingStore } from '@/store/setting'
@@ -108,13 +111,13 @@ const playerStore = usePlayerStore()
 const appStore = useAppStore()
 const settingStore = useSettingStore()
 const wallHavenStore = useWallHavenStore()
-const player = usePlayer()
-
+const contextMenu = useContextMenu()
 const loading = ref(false)
 const { showLyric, showHaven } = storeToRefs(appStore)
 const { currentTime } = storeToRefs(playerStore)
 const { track, isProgram } = usePlayerControl()
 const { wallpapers, currentWallpaper, currentIndex, brightness, blur, useTrackCover } = storeToRefs(wallHavenStore)
+const { themeName } = useCurrentTheme()
 
 const coverUrl = computed(() => sizeOfImage(track.value.coverUrl ?? track.value?.al?.picUrl ?? '', 1024))
 
@@ -161,6 +164,56 @@ async function onLoad() {
 }
 function onError() {
   loading.value = false
+}
+
+function handleContextMenu(event: MouseEvent) {
+  if (!track.value) {
+    return
+  }
+  const { toPlaylistMenuItems } = useTrackOperation(track.value)
+  const { x, y } = event
+  const option = {
+    theme: themeName.value,
+    x,
+    y,
+    items: [
+      {
+        label: '加入歌单',
+        children: toPlaylistMenuItems.value,
+      },
+      {
+        divided: true,
+      },
+      {
+        label: '打开背景设置',
+        onClick: () => {
+          showHaven.value = true
+        },
+      },
+      {
+        label: '下载背景图片',
+        onClick: () => {
+          if (currentWallpaper.value?.path) {
+            useDownload(currentWallpaper.value?.path)
+          }
+        },
+      },
+      {
+        label: '下载当前歌曲',
+        onClick: async () => {
+          if (track?.value?.id) {
+            const { data } = await getSongDownloadUrl({ id: track.id })
+            const artistName = track.ar?.map((i) => i.name)?.join(',')
+            const fileName = `${artistName} - ${track.name}.${data.type}`
+            useDownload(data.url, fileName)
+          }
+        },
+      },
+    ],
+    offsetFooter: 64,
+    customClass: 'bg-surfaceVariant',
+  }
+  contextMenu(option)
 }
 </script>
 
