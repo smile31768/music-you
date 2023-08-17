@@ -1,11 +1,5 @@
 <template>
-  <v-app
-    class="v-player"
-    :style="{
-      borderRadius: isPwa ? 'initial' : '28px',
-      border: isPwa ? 'none' : '8px solid rgba(var(--v-theme-primary), 0.2)',
-    }"
-  >
+  <v-app class="v-player">
     <AppCC />
     <app-nav v-if="smAndUp && navPosition === NavPosition.left" class="v-player-nav" />
     <app-header v-if="!inDeepPage && navPosition === NavPosition.top" class="v-player-header" />
@@ -45,7 +39,6 @@ watchEffect(() => {
   theme.global.name.value = themeName.value
 })
 const { isActive: inDeepPage } = useInForeground(['podcast', 'playlist', 'album', 'artist', 'search', 'video', 'daily'])
-const isPwa = useMediaQuery('(display-mode: standalone)')
 </script>
 <style lang="scss">
 $cubic-bezier: cubic-bezier(0.55, -0.01, 0, 1.03);
@@ -86,13 +79,13 @@ $transition-time: 350ms;
   transition-duration: $transition-time;
   transition-timing-function: $cubic-bezier;
 }
-.v-player {
-  border-radius: 28px;
-  border: 8px solid rgba(var(--v-theme-primary), 0.2);
-  transform: scale(1);
-  height: 100vh;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  //width: 100vw;
-}
+//.v-player {
+//  border-radius: 28px;
+//  border: 8px solid rgba(var(--v-theme-primary), 0.2);
+//  transform: scale(1);
+//  height: 100vh;
+//  overflow-y: hidden;
+//  overflow-x: hidden;
+//  //width: 100vw;
+//}
 </style>
