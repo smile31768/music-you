@@ -5,7 +5,7 @@
   Music You
 </h1>
 <p align="center">
-    <a href="https://m3.material.io/" target="_blank"> Material Design 3 (Material You)</a> 风格的音乐播放器, 网易云音乐非官方API NeteaseCloudMusicApi 接口
+    <a href="https://m3.material.io/" target="_blank"> Material Design 3 (Material You)</a> 风格的音乐播放器, 网易云音乐非官方API NeteaseCloudMusicApi 接
 </p>
 
 ## Introduction
